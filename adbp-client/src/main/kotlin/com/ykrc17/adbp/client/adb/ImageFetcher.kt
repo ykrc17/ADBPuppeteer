@@ -1,5 +1,6 @@
 package com.ykrc17.adbp.client.adb
 
+import com.ykrc17.adbp.client.SocketClient
 import java.awt.Component
 import java.awt.EventQueue
 import java.awt.image.BufferedImage
@@ -31,16 +32,20 @@ object ImageFetcher {
                     component.repaint()
                 }
                 fpsList.add(System.currentTimeMillis())
-                while (TimeUnit.SECONDS.convert(System.currentTimeMillis() - fpsList.peek(), TimeUnit.MILLISECONDS) > 5) {
+                while (TimeUnit.SECONDS.convert(System.currentTimeMillis() - fpsList.peek(), TimeUnit.MILLISECONDS) > 3) {
                     fpsList.pollFirst()
                 }
-                println(fpsList.size / 5f)
+                println(fpsList.size / 3f)
             }
         }).start()
     }
 
     private fun fetchImage(): BufferedImage {
-        val process = Runtime.getRuntime().exec("adb exec-out screencap -p")
-        return ImageIO.read(process.inputStream)
+        SocketClient.newSocket {
+            image = ImageIO.read(it)
+        }
+        return image
+//        val process = Runtime.getRuntime().exec("adb exec-out screencap -p")
+//        return ImageIO.read(process.inputStream)
     }
 }

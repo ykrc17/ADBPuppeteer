@@ -4,7 +4,7 @@ import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JSplitPane
 
-class MainFrame : JFrame("TraceOn") {
+class MainFrame : JFrame("ADBPuppeteer") {
     init {
         setSize(800, 600)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE

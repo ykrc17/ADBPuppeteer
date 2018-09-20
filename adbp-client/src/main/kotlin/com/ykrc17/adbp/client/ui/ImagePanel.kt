@@ -9,27 +9,31 @@ import javax.swing.JPanel
 
 
 class ImagePanel : JPanel(), MouseListener {
+    var ssScaleX = 1f
+    var ssScaleY = 1f
 
     init {
         addMouseListener(this)
 //        try {
         val image = ImageFetcher.image
-        preferredSize = Dimension(Math.round(image.width * SCALE), Math.round(image.height * SCALE))
+        preferredSize = Dimension(Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE))
 //        } catch (ex: Exception) {
 //            error(ex)
 //        }
+        ssScaleX = image.width / 1080f
+        ssScaleY = image.height / 1920f
         ImageFetcher.startFetch(this)
     }
 
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)
         val image = ImageFetcher.image
-        g.drawImage(image, 0, 0, Math.round(image.width * SCALE), Math.round(image.height * SCALE), this) // see javadoc for more info on the parameters
+        g.drawImage(image, 0, 0, Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE), this) // see javadoc for more info on the parameters
     }
 
     override fun mouseClicked(e: MouseEvent) {
         println(e.point)
-        Runtime.getRuntime().exec("adb shell input tap ${Math.round(e.x / SCALE)} ${Math.round(e.y / SCALE)}")
+        Runtime.getRuntime().exec("adb shell input tap ${Math.round(e.x / DRAW_SCALE / ssScaleX)} ${Math.round(e.y / DRAW_SCALE / ssScaleY)}")
     }
 
     override fun mouseReleased(e: MouseEvent) {
@@ -45,6 +49,6 @@ class ImagePanel : JPanel(), MouseListener {
     }
 
     companion object {
-        const val SCALE = 0.5f
+        const val DRAW_SCALE = 1f
     }
 }
