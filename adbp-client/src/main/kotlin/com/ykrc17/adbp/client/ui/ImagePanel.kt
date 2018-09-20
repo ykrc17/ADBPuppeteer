@@ -1,6 +1,8 @@
 package com.ykrc17.adbp.client.ui
 
+import com.ykrc17.adbp.client.SocketClient
 import com.ykrc17.adbp.client.adb.ImageFetcher
+import com.ykrc17.adbp.entity.TapEvent
 import java.awt.Dimension
 import java.awt.Graphics
 import java.awt.event.MouseEvent
@@ -33,7 +35,10 @@ class ImagePanel : JPanel(), MouseListener {
 
     override fun mouseClicked(e: MouseEvent) {
         println(e.point)
-        Runtime.getRuntime().exec("adb shell input tap ${Math.round(e.x / DRAW_SCALE / ssScaleX)} ${Math.round(e.y / DRAW_SCALE / ssScaleY)}")
+        val x = Math.round(e.x / DRAW_SCALE / ssScaleX)
+        val y = Math.round(e.y / DRAW_SCALE / ssScaleY)
+        SocketClient.newSocket(TapEvent(x, y)) {}
+//        Runtime.getRuntime().exec("adb shell input tap $x $y")
     }
 
     override fun mouseReleased(e: MouseEvent) {

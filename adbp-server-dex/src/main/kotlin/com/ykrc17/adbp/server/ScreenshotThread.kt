@@ -10,9 +10,9 @@ object ScreenshotThread : Thread() {
     override fun run() {
         super.run()
         while (true) {
-            val time = System.currentTimeMillis()
+//            val time = System.currentTimeMillis()
             val bitmap = SurfaceControl.screenshot(360, 640)
-            println("screenshot: " + (System.currentTimeMillis() - time))
+//            println("screenshot: " + (System.currentTimeMillis() - time))
             queue.transfer(bitmap)
         }
     }

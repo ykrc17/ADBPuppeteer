@@ -1,1 +1,4 @@
-include "adbp-client", "adbp-server-dex", "android-stub"
+include "adbp-client"
+include "adbp-entity"
+include "adbp-server-dex"
+include "android-stub"
