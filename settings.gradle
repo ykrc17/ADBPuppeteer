@@ -1,1 +1,1 @@
-include "adbp-client", "adbp-server-dex"
+include "adbp-client", "adbp-server-dex", "android-stub"

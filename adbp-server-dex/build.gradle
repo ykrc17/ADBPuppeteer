@@ -1,13 +1,10 @@
 apply plugin: "kotlin"
 apply plugin: "com.github.johnrengelman.shadow"
 
-def localProp = new Properties()
-localProp.load(rootProject.file("local.properties").newInputStream())
-def sdkDir = file(localProp.getProperty("sdk.dir"))
-
 dependencies {
-    compileOnly files(new File(sdkDir, "platforms/android-27/android.jar"))
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
+    compileOnly project(":android-stub")
+    compileOnly files(sdkDirFile)
 }
 
 shadowJar {

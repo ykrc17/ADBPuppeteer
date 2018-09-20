@@ -11,6 +11,10 @@ buildscript {
     }
 }
 
+def localProp = new Properties()
+localProp.load(rootProject.file("local.properties").newInputStream())
+ext.sdkDirFile = new File(localProp.getProperty("sdk.dir"), "platforms/android-27/android.jar")
+
 subprojects {
     repositories {
         mavenCentral()

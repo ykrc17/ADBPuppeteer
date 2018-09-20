@@ -1,7 +1,7 @@
 package com.ykrc17.adbp.server
 
 import android.graphics.Bitmap
-import com.ykrc17.adbp.server.internal.SurfaceControl
+import android.view.SurfaceControl
 import java.io.OutputStream
 import java.net.ServerSocket
 
