@@ -1,4 +1,7 @@
 include "adbp-client"
 include "adbp-entity"
 include "adbp-server-dex"
+
+include "adb-clipboard"
+
 include "android-stub"

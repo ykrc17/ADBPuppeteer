@@ -1,7 +1,7 @@
 package com.ykrc17.adbp.server
 
 import android.graphics.Bitmap
-import com.ykrc17.adbp.entity.BitmapEvent
+import com.ykrc17.adbp.entity.ScreenEvent
 import com.ykrc17.adbp.entity.TapEvent
 import java.io.ObjectInputStream
 import java.net.ServerSocket
@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
         val sin = ObjectInputStream(socket.getInputStream())
         val event = sin.readObject()
         when (event) {
-            is BitmapEvent -> handleBitmapEvent(event, socket)
+            is ScreenEvent -> handleBitmapEvent(event, socket)
             is TapEvent -> handleTapEvent(event, socket)
             else -> socket.close()
         }
@@ -28,7 +28,7 @@ fun main(args: Array<String>) {
 }
 
 
-fun handleBitmapEvent(event: BitmapEvent, socket: Socket) {
+fun handleBitmapEvent(event: ScreenEvent, socket: Socket) {
     if (!ScreenshotThread.isAlive) {
         ScreenshotThread.start()
     }

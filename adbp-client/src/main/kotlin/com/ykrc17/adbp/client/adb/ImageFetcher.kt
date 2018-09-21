@@ -1,7 +1,7 @@
 package com.ykrc17.adbp.client.adb
 
 import com.ykrc17.adbp.client.SocketClient
-import com.ykrc17.adbp.entity.BitmapEvent
+import com.ykrc17.adbp.entity.ScreenEvent
 import java.awt.Component
 import java.awt.EventQueue
 import java.awt.image.BufferedImage
@@ -49,7 +49,7 @@ object ImageFetcher {
     }
 
     private fun fetchImage(): BufferedImage {
-        SocketClient.newSocket(BitmapEvent()) {
+        SocketClient.newSocket(ScreenEvent()) {
             image = ImageIO.read(it)
         }
         return image
