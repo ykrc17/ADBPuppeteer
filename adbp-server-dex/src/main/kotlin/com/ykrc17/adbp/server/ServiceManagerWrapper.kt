@@ -5,7 +5,7 @@ import android.hardware.input.IInputManager
 import android.os.ServiceManager
 
 object ServiceManagerWrapper {
-    fun getInputManager(): IInputManager {
-        return IInputManager.Stub.asInterface(ServiceManager.getService(Context.INPUT_SERVICE))
+    val inputManager by lazy {
+        IInputManager.Stub.asInterface(ServiceManager.getService(Context.INPUT_SERVICE))
     }
 }

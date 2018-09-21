@@ -5,6 +5,7 @@ import com.ykrc17.adbp.entity.InputKeyEvent
 import com.ykrc17.adbp.entity.InputTapEvent
 import com.ykrc17.adbp.entity.ScreenEvent
 import com.ykrc17.adbp.server.handler.KeyEventHandler
+import com.ykrc17.adbp.server.handler.TapEventHandler
 import java.io.ObjectInputStream
 import java.net.ServerSocket
 import java.net.Socket
@@ -22,8 +23,8 @@ fun main(args: Array<String>) {
         val event = sin.readObject()
         when (event) {
             is ScreenEvent -> handleBitmapEvent(event, socket)
-            is InputTapEvent -> handleTapEvent(event, socket)
-            is InputKeyEvent -> KeyEventHandler.handle(event, socket)
+            is InputTapEvent -> TapEventHandler.dispatch(event, socket)
+            is InputKeyEvent -> KeyEventHandler.dispatch(event, socket)
             else -> socket.close()
         }
     }
@@ -40,13 +41,6 @@ fun handleBitmapEvent(event: ScreenEvent, socket: Socket) {
 //    val time = System.currentTimeMillis()
         ScreenshotThread.queue.take().compress(Bitmap.CompressFormat.JPEG, 90, sout)
 //    println("transfer: " + (System.currentTimeMillis() - time))
-        socket.close()
-    }
-}
-
-fun handleTapEvent(event: InputTapEvent, socket: Socket) {
-    threadPool.execute {
-        Runtime.getRuntime().exec("input tap ${event.x} ${event.y}")
         socket.close()
     }
 }
