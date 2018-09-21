@@ -6,7 +6,6 @@ import java.awt.Component
 import java.awt.EventQueue
 import java.awt.image.BufferedImage
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.imageio.ImageIO
 
 object ImageFetcher {
@@ -28,15 +27,23 @@ object ImageFetcher {
     fun startFetch(component: Component) {
         Thread(Runnable {
             while (true) {
+                val time = System.currentTimeMillis()
                 image = fetchImage()
+                // 最大30帧
+                val sleepTime = Math.max(0, 33 - (System.currentTimeMillis() - time))
+
                 EventQueue.invokeLater {
                     component.repaint()
+
+                    // fps
+                    fpsList.add(System.currentTimeMillis())
+                    while (System.currentTimeMillis() - fpsList.peek() > 1000) {
+                        fpsList.pollFirst()
+                    }
+                    println(fpsList.size)
                 }
-                fpsList.add(System.currentTimeMillis())
-                while (TimeUnit.SECONDS.convert(System.currentTimeMillis() - fpsList.peek(), TimeUnit.MILLISECONDS) > 3) {
-                    fpsList.pollFirst()
-                }
-                println(fpsList.size / 3f)
+
+                Thread.sleep(sleepTime)
             }
         }).start()
     }
