@@ -43,8 +43,8 @@ class ImagePanel : JPanel() {
     private val mouseListener = object : MouseListener {
         override fun mouseClicked(e: MouseEvent) {
             println(e.point)
-            val x = Math.round(e.x / DRAW_SCALE / ssScaleX)
-            val y = Math.round(e.y / DRAW_SCALE / ssScaleY)
+            val x = e.x / DRAW_SCALE / ssScaleX
+            val y = e.y / DRAW_SCALE / ssScaleY
             SocketClient.newSocket(InputTapEvent(x, y)) {}
 //        Runtime.getRuntime().exec("adb shell input tap $x $y")
         }
