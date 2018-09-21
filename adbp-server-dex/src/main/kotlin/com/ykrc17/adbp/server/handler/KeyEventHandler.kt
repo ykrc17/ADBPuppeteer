@@ -11,15 +11,15 @@ import java.net.Socket
 object KeyEventHandler : EventHandler<InputKeyEvent> {
     override fun handle(event: InputKeyEvent, socket: Socket) {
         println(event.keyCode)
-        injectKeyEvent(KeyEvent.ACTION_DOWN, event.keyCode)
-        injectKeyEvent(KeyEvent.ACTION_UP, event.keyCode)
+        injectKeyEvent(KeyEvent.ACTION_DOWN, event.keyCode, event.metaState)
+        injectKeyEvent(KeyEvent.ACTION_UP, event.keyCode, event.metaState)
         //        injectEvent = KeyEvent(KeyEvent.ACTION_UP, event.keyCode)
 //        ServiceManagerWrapper.getInputManager().injectInputEvent(injectEvent, 0)
     }
 
-    private fun injectKeyEvent(action: Int, keyCode: Int) {
+    private fun injectKeyEvent(action: Int, keyCode: Int, metaState: Int) {
         val time = SystemClock.uptimeMillis()
-        val injectEvent = KeyEvent(time, time, action, keyCode, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, 0, InputDevice.SOURCE_KEYBOARD)
+        val injectEvent = KeyEvent(time, time, action, keyCode, 0, metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, 0, InputDevice.SOURCE_KEYBOARD)
         ServiceManagerWrapper.getInputManager().injectInputEvent(injectEvent, 0)
 
     }

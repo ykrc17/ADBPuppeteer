@@ -16,10 +16,9 @@
 
 package com.ykrc17.adbp.client.input;
 
-public class AndroidKeyEvent {
-    public static final int ACTION_DOWN = 0;
-    public static final int ACTION_UP = 1;
+import android.text.method.MetaKeyKeyListener;
 
+public class AndroidKeyEvent {
     /**
      * Key code constant: Unknown key code.
      */
@@ -1320,4 +1319,211 @@ public class AndroidKeyEvent {
      * @hide
      */
     public static final int KEYCODE_ALL_APPS = 284;
+
+    /**
+     * {@link #getAction} value: the key has been pressed down.
+     */
+    public static final int ACTION_DOWN = 0;
+    /**
+     * {@link #getAction} value: the key has been released.
+     */
+    public static final int ACTION_UP = 1;
+    /**
+     * {@link #getAction} value: multiple duplicate key events have
+     * occurred in a row, or a complex string is being delivered.  If the
+     * key code is not {#link {@link #KEYCODE_UNKNOWN} then the
+     * {#link {@link #getRepeatCount()} method returns the number of times
+     * the given key code should be executed.
+     * Otherwise, if the key code is {@link #KEYCODE_UNKNOWN}, then
+     * this is a sequence of characters as returned by {@link #getCharacters}.
+     */
+    public static final int ACTION_MULTIPLE = 2;
+
+    /**
+     * SHIFT key locked in CAPS mode.
+     * Reserved for use by {@link MetaKeyKeyListener} for a published constant in its API.
+     *
+     * @hide
+     */
+    public static final int META_CAP_LOCKED = 0x100;
+
+    /**
+     * ALT key locked.
+     * Reserved for use by {@link MetaKeyKeyListener} for a published constant in its API.
+     *
+     * @hide
+     */
+    public static final int META_ALT_LOCKED = 0x200;
+
+    /**
+     * SYM key locked.
+     * Reserved for use by {@link MetaKeyKeyListener} for a published constant in its API.
+     *
+     * @hide
+     */
+    public static final int META_SYM_LOCKED = 0x400;
+
+    /**
+     * Text is in selection mode.
+     * Reserved for use by {@link MetaKeyKeyListener} for a private unpublished constant
+     * in its API that is currently being retained for legacy reasons.
+     *
+     * @hide
+     */
+    public static final int META_SELECTING = 0x800;
+
+    /**
+     * <p>This mask is used to check whether one of the ALT meta keys is pressed.</p>
+     *
+     * @see #isAltPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_ALT_LEFT
+     * @see #KEYCODE_ALT_RIGHT
+     */
+    public static final int META_ALT_ON = 0x02;
+
+    /**
+     * <p>This mask is used to check whether the left ALT meta key is pressed.</p>
+     *
+     * @see #isAltPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_ALT_LEFT
+     */
+    public static final int META_ALT_LEFT_ON = 0x10;
+
+    /**
+     * <p>This mask is used to check whether the right the ALT meta key is pressed.</p>
+     *
+     * @see #isAltPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_ALT_RIGHT
+     */
+    public static final int META_ALT_RIGHT_ON = 0x20;
+
+    /**
+     * <p>This mask is used to check whether one of the SHIFT meta keys is pressed.</p>
+     *
+     * @see #isShiftPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_SHIFT_LEFT
+     * @see #KEYCODE_SHIFT_RIGHT
+     */
+    public static final int META_SHIFT_ON = 0x1;
+
+    /**
+     * <p>This mask is used to check whether the left SHIFT meta key is pressed.</p>
+     *
+     * @see #isShiftPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_SHIFT_LEFT
+     */
+    public static final int META_SHIFT_LEFT_ON = 0x40;
+
+    /**
+     * <p>This mask is used to check whether the right SHIFT meta key is pressed.</p>
+     *
+     * @see #isShiftPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_SHIFT_RIGHT
+     */
+    public static final int META_SHIFT_RIGHT_ON = 0x80;
+
+    /**
+     * <p>This mask is used to check whether the SYM meta key is pressed.</p>
+     *
+     * @see #isSymPressed()
+     * @see #getMetaState()
+     */
+    public static final int META_SYM_ON = 0x4;
+
+    /**
+     * <p>This mask is used to check whether the FUNCTION meta key is pressed.</p>
+     *
+     * @see #isFunctionPressed()
+     * @see #getMetaState()
+     */
+    public static final int META_FUNCTION_ON = 0x8;
+
+    /**
+     * <p>This mask is used to check whether one of the CTRL meta keys is pressed.</p>
+     *
+     * @see #isCtrlPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_CTRL_LEFT
+     * @see #KEYCODE_CTRL_RIGHT
+     */
+    public static final int META_CTRL_ON = 0x1000;
+
+    /**
+     * <p>This mask is used to check whether the left CTRL meta key is pressed.</p>
+     *
+     * @see #isCtrlPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_CTRL_LEFT
+     */
+    public static final int META_CTRL_LEFT_ON = 0x2000;
+
+    /**
+     * <p>This mask is used to check whether the right CTRL meta key is pressed.</p>
+     *
+     * @see #isCtrlPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_CTRL_RIGHT
+     */
+    public static final int META_CTRL_RIGHT_ON = 0x4000;
+
+    /**
+     * <p>This mask is used to check whether one of the META meta keys is pressed.</p>
+     *
+     * @see #isMetaPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_META_LEFT
+     * @see #KEYCODE_META_RIGHT
+     */
+    public static final int META_META_ON = 0x10000;
+
+    /**
+     * <p>This mask is used to check whether the left META meta key is pressed.</p>
+     *
+     * @see #isMetaPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_META_LEFT
+     */
+    public static final int META_META_LEFT_ON = 0x20000;
+
+    /**
+     * <p>This mask is used to check whether the right META meta key is pressed.</p>
+     *
+     * @see #isMetaPressed()
+     * @see #getMetaState()
+     * @see #KEYCODE_META_RIGHT
+     */
+    public static final int META_META_RIGHT_ON = 0x40000;
+
+    /**
+     * <p>This mask is used to check whether the CAPS LOCK meta key is on.</p>
+     *
+     * @see #isCapsLockOn()
+     * @see #getMetaState()
+     * @see #KEYCODE_CAPS_LOCK
+     */
+    public static final int META_CAPS_LOCK_ON = 0x100000;
+
+    /**
+     * <p>This mask is used to check whether the NUM LOCK meta key is on.</p>
+     *
+     * @see #isNumLockOn()
+     * @see #getMetaState()
+     * @see #KEYCODE_NUM_LOCK
+     */
+    public static final int META_NUM_LOCK_ON = 0x200000;
+
+    /**
+     * <p>This mask is used to check whether the SCROLL LOCK meta key is on.</p>
+     *
+     * @see #isScrollLockOn()
+     * @see #getMetaState()
+     * @see #KEYCODE_SCROLL_LOCK
+     */
+    public static final int META_SCROLL_LOCK_ON = 0x400000;
 }

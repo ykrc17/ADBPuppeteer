@@ -67,12 +67,11 @@ class ImagePanel : JPanel() {
         }
 
         override fun keyPressed(e: KeyEvent) {
-            println("keyPressed: ${e.keyCode} when: ${e.`when`}")
-            KeyEventDispatcher.down(e.keyCode)
+            println("keyPressed: ${e.keyCode}")
+            KeyEventDispatcher.down(e)
         }
 
         override fun keyReleased(e: KeyEvent) {
-            println("keyReleased: ${e.keyCode} when: ${e.`when`}")
         }
     }
 
