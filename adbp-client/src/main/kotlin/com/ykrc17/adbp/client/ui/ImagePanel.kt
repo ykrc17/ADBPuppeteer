@@ -2,20 +2,27 @@ package com.ykrc17.adbp.client.ui
 
 import com.ykrc17.adbp.client.SocketClient
 import com.ykrc17.adbp.client.adb.ImageFetcher
-import com.ykrc17.adbp.entity.TapEvent
+import com.ykrc17.adbp.client.input.KeyEventDispatcher
+import com.ykrc17.adbp.entity.InputTapEvent
 import java.awt.Dimension
+import java.awt.EventQueue
 import java.awt.Graphics
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JPanel
 
 
-class ImagePanel : JPanel(), MouseListener {
+class ImagePanel : JPanel() {
     var ssScaleX = 1f
     var ssScaleY = 1f
 
     init {
-        addMouseListener(this)
+        EventQueue.invokeLater {
+            addMouseListener(mouseListener)
+            addKeyListener(keyListener)
+        }
 //        try {
         val image = ImageFetcher.image
         preferredSize = Dimension(Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE))
@@ -33,24 +40,40 @@ class ImagePanel : JPanel(), MouseListener {
         g.drawImage(image, 0, 0, Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE), this) // see javadoc for more info on the parameters
     }
 
-    override fun mouseClicked(e: MouseEvent) {
-        println(e.point)
-        val x = Math.round(e.x / DRAW_SCALE / ssScaleX)
-        val y = Math.round(e.y / DRAW_SCALE / ssScaleY)
-        SocketClient.newSocket(TapEvent(x, y)) {}
+    private val mouseListener = object : MouseListener {
+        override fun mouseClicked(e: MouseEvent) {
+            println(e.point)
+            val x = Math.round(e.x / DRAW_SCALE / ssScaleX)
+            val y = Math.round(e.y / DRAW_SCALE / ssScaleY)
+            SocketClient.newSocket(InputTapEvent(x, y)) {}
 //        Runtime.getRuntime().exec("adb shell input tap $x $y")
+        }
+
+        override fun mouseReleased(e: MouseEvent) {
+        }
+
+        override fun mouseEntered(e: MouseEvent) {
+        }
+
+        override fun mouseExited(e: MouseEvent) {
+        }
+
+        override fun mousePressed(e: MouseEvent) {
+        }
     }
 
-    override fun mouseReleased(e: MouseEvent) {
-    }
+    val keyListener = object : KeyListener {
+        override fun keyTyped(e: KeyEvent) {
+        }
 
-    override fun mouseEntered(e: MouseEvent) {
-    }
+        override fun keyPressed(e: KeyEvent) {
+            println("keyPressed: ${e.keyCode} when: ${e.`when`}")
+            KeyEventDispatcher.down(e.keyCode)
+        }
 
-    override fun mouseExited(e: MouseEvent) {
-    }
-
-    override fun mousePressed(e: MouseEvent) {
+        override fun keyReleased(e: KeyEvent) {
+            println("keyReleased: ${e.keyCode} when: ${e.`when`}")
+        }
     }
 
     companion object {

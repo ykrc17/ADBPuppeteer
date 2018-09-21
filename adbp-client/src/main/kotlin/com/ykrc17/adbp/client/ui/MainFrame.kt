@@ -10,6 +10,7 @@ class MainFrame : JFrame("ADBPuppeteer") {
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
 
         val imagePane = ImagePanel()
+        addKeyListener(imagePane.keyListener)
         val pane = JSplitPane(JSplitPane.HORIZONTAL_SPLIT, imagePane, JLabel("Hello World"))
         contentPane.add(pane)
 

@@ -9,6 +9,7 @@ import java.util.*
 import javax.imageio.ImageIO
 
 object ImageFetcher {
+    const val FPS_ON = false
     private val fpsList = LinkedList<Long>()
 
     private var imageInner: BufferedImage? = null
@@ -36,11 +37,13 @@ object ImageFetcher {
                     component.repaint()
 
                     // fps
-                    fpsList.add(System.currentTimeMillis())
-                    while (System.currentTimeMillis() - fpsList.peek() > 1000) {
-                        fpsList.pollFirst()
+                    if (FPS_ON) {
+                        fpsList.add(System.currentTimeMillis())
+                        while (System.currentTimeMillis() - fpsList.peek() > 1000) {
+                            fpsList.pollFirst()
+                        }
+                        println(fpsList.size)
                     }
-                    println(fpsList.size)
                 }
 
                 Thread.sleep(sleepTime)
