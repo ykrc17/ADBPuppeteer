@@ -17,6 +17,7 @@ object KeyEventDispatcher {
         keyCodeMap[KeyEvent.VK_BACK_SPACE] = AndroidKeyEvent.KEYCODE_DEL
         keyCodeMap[KeyEvent.VK_ENTER] = AndroidKeyEvent.KEYCODE_ENTER
         keyCodeMap[KeyEvent.VK_SPACE] = AndroidKeyEvent.KEYCODE_SPACE
+        keyCodeMap[KeyEvent.VK_SLASH] = AndroidKeyEvent.KEYCODE_SLASH
     }
 
     fun down(keyCode: Int) {
@@ -27,7 +28,7 @@ object KeyEventDispatcher {
         var keyCode = keyCodeMap[javaKeyCode]
         if (keyCode == null) {
             keyCode = javaKeyCode
-            println("unknown key code: $javaKeyCode")
+            System.err.println("unknown key code: $javaKeyCode")
         }
         return keyCode
     }
