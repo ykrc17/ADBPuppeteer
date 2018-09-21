@@ -16,6 +16,7 @@ object KeyEventDispatcher {
         }
         keyCodeMap[KeyEvent.VK_BACK_SPACE] = AndroidKeyEvent.KEYCODE_DEL
         keyCodeMap[KeyEvent.VK_ENTER] = AndroidKeyEvent.KEYCODE_ENTER
+        keyCodeMap[KeyEvent.VK_SPACE] = AndroidKeyEvent.KEYCODE_SPACE
     }
 
     fun down(keyCode: Int) {
