@@ -15,8 +15,6 @@ import javax.swing.JPanel
 
 
 class ImagePanel : JPanel() {
-    var ssScaleX = 1f
-    var ssScaleY = 1f
 
     init {
         EventQueue.invokeLater {
@@ -29,8 +27,6 @@ class ImagePanel : JPanel() {
 //        } catch (ex: Exception) {
 //            error(ex)
 //        }
-        ssScaleX = image.width / 1080f
-        ssScaleY = image.height / 1920f
         ImageFetcher.startFetch(this)
     }
 
@@ -43,8 +39,8 @@ class ImagePanel : JPanel() {
     private val mouseListener = object : MouseListener {
         override fun mouseClicked(e: MouseEvent) {
             println(e.point)
-            val x = e.x / DRAW_SCALE / ssScaleX
-            val y = e.y / DRAW_SCALE / ssScaleY
+            val x = e.x / DRAW_SCALE / SCREEN_SHOT_SCALE
+            val y = e.y / DRAW_SCALE / SCREEN_SHOT_SCALE
             SocketClient.newSocket(InputTapEvent(x, y)) {}
 //        Runtime.getRuntime().exec("adb shell input tap $x $y")
         }
@@ -77,5 +73,6 @@ class ImagePanel : JPanel() {
 
     companion object {
         const val DRAW_SCALE = 1f
+        const val SCREEN_SHOT_SCALE = 1f / 3
     }
 }
