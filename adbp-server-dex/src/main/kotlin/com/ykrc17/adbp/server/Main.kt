@@ -2,10 +2,10 @@ package com.ykrc17.adbp.server
 
 import android.graphics.Bitmap
 import com.ykrc17.adbp.entity.InputKeyEvent
-import com.ykrc17.adbp.entity.InputTapEvent
+import com.ykrc17.adbp.entity.ClientMotionEvent
 import com.ykrc17.adbp.entity.ScreenEvent
 import com.ykrc17.adbp.server.handler.KeyEventHandler
-import com.ykrc17.adbp.server.handler.TapEventHandler
+import com.ykrc17.adbp.server.handler.MotionEventHandler
 import java.io.ObjectInputStream
 import java.net.ServerSocket
 import java.net.Socket
@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
         val event = sin.readObject()
         when (event) {
             is ScreenEvent -> handleBitmapEvent(event, socket)
-            is InputTapEvent -> TapEventHandler.dispatch(event, socket)
+            is ClientMotionEvent -> MotionEventHandler.dispatch(event, socket)
             is InputKeyEvent -> KeyEventHandler.dispatch(event, socket)
             else -> socket.close()
         }

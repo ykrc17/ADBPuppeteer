@@ -1,8 +1,9 @@
 package com.ykrc17.adbp.entity;
 
-public class InputTapEvent extends Event {
+public class ClientMotionEvent extends Event {
     private float x;
     private float y;
+    private int action;
 
     public float getX() {
         return x;
@@ -12,8 +13,13 @@ public class InputTapEvent extends Event {
         return y;
     }
 
-    public InputTapEvent(float x, float y) {
+    public int getAction() {
+        return action;
+    }
+
+    public ClientMotionEvent(float x, float y, int action) {
         this.x = x;
         this.y = y;
+        this.action = action;
     }
 }
