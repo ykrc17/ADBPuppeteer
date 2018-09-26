@@ -1,8 +1,8 @@
 package com.ykrc17.adbp.client.ui
 
-import android.view.MotionEvent
 import com.ykrc17.adbp.client.SocketClient
 import com.ykrc17.adbp.client.adb.ImageFetcher
+import com.ykrc17.adbp.client.input.AndroidMotionEvent
 import com.ykrc17.adbp.entity.ADBMotionEvent
 import java.awt.Dimension
 import java.awt.EventQueue
@@ -38,15 +38,15 @@ class ScreenPanel : JPanel {
     private val mouseListener = object : MouseListener, MouseMotionListener {
 
         override fun mousePressed(e: MouseEvent) {
-            sendMotionEvent(e, MotionEvent.ACTION_DOWN)
+            sendMotionEvent(e, AndroidMotionEvent.ACTION_DOWN)
         }
 
         override fun mouseReleased(e: MouseEvent) {
-            sendMotionEvent(e, MotionEvent.ACTION_UP)
+            sendMotionEvent(e, AndroidMotionEvent.ACTION_UP)
         }
 
         override fun mouseDragged(e: MouseEvent) {
-            sendMotionEvent(e, MotionEvent.ACTION_MOVE)
+            sendMotionEvent(e, AndroidMotionEvent.ACTION_MOVE)
         }
 
         override fun mouseClicked(e: MouseEvent) {

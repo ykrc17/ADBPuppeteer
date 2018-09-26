@@ -1,12 +1,21 @@
 apply plugin: "kotlin"
+apply plugin: "com.github.johnrengelman.shadow"
 
 dependencies {
     implementation project(":adbp-entity")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
 }
 
-jar {
+shadowJar {
+    baseName "adbp-client"
+    classifier = null
     manifest {
         attributes "Main-Class": "com.ykrc17.adbp.client.MainKt"
+    }
+    doLast {
+        copy {
+            from "build/libs/"
+            into rootProject.file("release")
+        }
     }
 }

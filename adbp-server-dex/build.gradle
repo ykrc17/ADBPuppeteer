@@ -14,12 +14,12 @@ shadowJar {
     doLast {
         copy {
             from "build/libs/"
-            into "release"
+            into rootProject.file("release")
         }
     }
     doLast {
         exec {
-            commandLine "dx", "--dex", "--output", file("release/${baseName}.dex"), file("release/${baseName}.jar")
+            commandLine "dx", "--dex", "--output", rootProject.file("release/${baseName}.dex"), rootProject.file("release/${baseName}.jar")
         }
     }
 }
