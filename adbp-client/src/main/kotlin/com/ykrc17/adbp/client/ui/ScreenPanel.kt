@@ -3,22 +3,22 @@ package com.ykrc17.adbp.client.ui
 import android.view.MotionEvent
 import com.ykrc17.adbp.client.SocketClient
 import com.ykrc17.adbp.client.adb.ImageFetcher
-import com.ykrc17.adbp.client.input.KeyEventDispatcher
-import com.ykrc17.adbp.entity.ClientMotionEvent
+import com.ykrc17.adbp.entity.ADBMotionEvent
 import java.awt.Dimension
 import java.awt.EventQueue
 import java.awt.Graphics
-import java.awt.event.*
+import java.awt.event.MouseEvent
+import java.awt.event.MouseListener
+import java.awt.event.MouseMotionListener
 import javax.swing.JPanel
 
 
-class ImagePanel : JPanel() {
+class ScreenPanel : JPanel {
 
-    init {
+    constructor() {
         EventQueue.invokeLater {
             addMouseListener(mouseListener)
             addMouseMotionListener(mouseListener)
-            addKeyListener(keyListener)
         }
 //        try {
         val image = ImageFetcher.image
@@ -66,20 +66,7 @@ class ImagePanel : JPanel() {
         println("action: $action, ${e.point}")
         val x = e.x / DRAW_SCALE / SCREEN_SHOT_SCALE
         val y = e.y / DRAW_SCALE / SCREEN_SHOT_SCALE
-        SocketClient.newSocket(ClientMotionEvent(x, y, action)) {}
-    }
-
-    val keyListener = object : KeyListener {
-        override fun keyTyped(e: KeyEvent) {
-        }
-
-        override fun keyPressed(e: KeyEvent) {
-            println("keyPressed: ${e.keyCode}")
-            KeyEventDispatcher.down(e)
-        }
-
-        override fun keyReleased(e: KeyEvent) {
-        }
+        SocketClient.newSocket(ADBMotionEvent(x, y, action)) {}
     }
 
     companion object {

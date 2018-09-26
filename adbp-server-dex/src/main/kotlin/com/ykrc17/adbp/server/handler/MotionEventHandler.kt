@@ -3,19 +3,19 @@ package com.ykrc17.adbp.server.handler
 import android.os.SystemClock
 import android.view.InputDevice
 import android.view.MotionEvent
-import com.ykrc17.adbp.entity.ClientMotionEvent
+import com.ykrc17.adbp.entity.ADBMotionEvent
 import com.ykrc17.adbp.server.ServiceManagerWrapper
 import java.io.OutputStream
 import kotlin.math.roundToInt
 
-object MotionEventHandler : EventHandler<ClientMotionEvent>() {
+object MotionEventHandler : EventHandler<ADBMotionEvent>() {
     private var startTime = 0L
 
-    override fun handle(event: ClientMotionEvent, out: OutputStream) {
+    override fun handle(event: ADBMotionEvent, out: OutputStream) {
         tap(event)
     }
 
-    private fun tap(event: ClientMotionEvent) {
+    private fun tap(event: ADBMotionEvent) {
         if (event.action == MotionEvent.ACTION_DOWN) {
             startTime = SystemClock.uptimeMillis()
         }
@@ -39,7 +39,7 @@ object MotionEventHandler : EventHandler<ClientMotionEvent>() {
         return MotionEvent.obtain(downTime, eventTime, action, 1, arrayOf(props), arrayOf(coords), 0, 0, 1f, 1f, 0, 0, InputDevice.SOURCE_TOUCHSCREEN, 0)
     }
 
-    private fun tapUsingShell(event: ClientMotionEvent) {
+    private fun tapUsingShell(event: ADBMotionEvent) {
         Runtime.getRuntime().exec("input tap ${event.x.roundToInt()} ${event.y.roundToInt()}")
     }
 }

@@ -4,13 +4,13 @@ import android.os.SystemClock
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
-import com.ykrc17.adbp.entity.InputKeyEvent
+import com.ykrc17.adbp.entity.ADBKeyEvent
 import com.ykrc17.adbp.server.ServiceManagerWrapper
 import java.io.OutputStream
 
-object KeyEventHandler : EventHandler<InputKeyEvent>() {
+object KeyEventHandler : EventHandler<ADBKeyEvent>() {
 
-    override fun handle(event: InputKeyEvent, out: OutputStream) {
+    override fun handle(event: ADBKeyEvent, out: OutputStream) {
         println(event.keyCode)
         injectKeyEvent(KeyEvent.ACTION_DOWN, event.keyCode, event.metaState)
         injectKeyEvent(KeyEvent.ACTION_UP, event.keyCode, event.metaState)

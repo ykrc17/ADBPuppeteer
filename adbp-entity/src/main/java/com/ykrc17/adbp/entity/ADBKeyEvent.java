@@ -1,6 +1,6 @@
 package com.ykrc17.adbp.entity;
 
-public class InputKeyEvent extends Event {
+public class ADBKeyEvent extends Event {
     private int keyCode;
     private int metaState;
 
@@ -12,7 +12,7 @@ public class InputKeyEvent extends Event {
         return metaState;
     }
 
-    public InputKeyEvent(int keyCode, int metaState) {
+    public ADBKeyEvent(int keyCode, int metaState) {
         this.keyCode = keyCode;
         this.metaState = metaState;
     }

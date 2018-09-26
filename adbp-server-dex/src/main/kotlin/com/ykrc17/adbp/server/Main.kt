@@ -1,8 +1,8 @@
 package com.ykrc17.adbp.server
 
 import android.graphics.Bitmap
-import com.ykrc17.adbp.entity.InputKeyEvent
-import com.ykrc17.adbp.entity.ClientMotionEvent
+import com.ykrc17.adbp.entity.ADBKeyEvent
+import com.ykrc17.adbp.entity.ADBMotionEvent
 import com.ykrc17.adbp.entity.ScreenEvent
 import com.ykrc17.adbp.server.handler.KeyEventHandler
 import com.ykrc17.adbp.server.handler.MotionEventHandler
@@ -23,8 +23,8 @@ fun main(args: Array<String>) {
         val event = sin.readObject()
         when (event) {
             is ScreenEvent -> handleBitmapEvent(event, socket)
-            is ClientMotionEvent -> MotionEventHandler.dispatch(event, socket)
-            is InputKeyEvent -> KeyEventHandler.dispatch(event, socket)
+            is ADBMotionEvent -> MotionEventHandler.dispatch(event, socket)
+            is ADBKeyEvent -> KeyEventHandler.dispatch(event, socket)
             else -> socket.close()
         }
     }

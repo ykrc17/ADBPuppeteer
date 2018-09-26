@@ -1,7 +1,7 @@
 package com.ykrc17.adbp.client.input
 
 import com.ykrc17.adbp.client.SocketClient
-import com.ykrc17.adbp.entity.InputKeyEvent
+import com.ykrc17.adbp.entity.ADBKeyEvent
 import java.awt.event.KeyEvent
 
 object KeyEventDispatcher {
@@ -33,11 +33,7 @@ object KeyEventDispatcher {
         keyCodeMap[KeyEvent.VK_DECIMAL] = AndroidKeyEvent.KEYCODE_PERIOD
     }
 
-    fun down(event: KeyEvent) {
-        handleEvent(AndroidKeyEvent.ACTION_DOWN, event)
-    }
-
-    private fun handleEvent(action: Int, event: KeyEvent) {
+    fun sendJvmKeyEvent(event: KeyEvent) {
         if (blackList.contains(event.keyCode)) {
             return
         }
@@ -45,7 +41,11 @@ object KeyEventDispatcher {
         if (event.isShiftDown) {
             metaState += AndroidKeyEvent.META_SHIFT_ON
         }
-        SocketClient.newSocket(InputKeyEvent(convertKeyCode(event.keyCode), metaState)) {}
+        sendADBKeyEvent(convertKeyCode(event.keyCode), metaState)
+    }
+
+    fun sendADBKeyEvent(keyCode: Int, metaState: Int = 0) {
+        SocketClient.newSocket(ADBKeyEvent(keyCode, metaState)) {}
     }
 
     private fun convertKeyCode(javaKeyCode: Int): Int {

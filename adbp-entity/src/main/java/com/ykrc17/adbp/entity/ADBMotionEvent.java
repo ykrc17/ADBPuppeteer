@@ -1,6 +1,6 @@
 package com.ykrc17.adbp.entity;
 
-public class ClientMotionEvent extends Event {
+public class ADBMotionEvent extends Event {
     private float x;
     private float y;
     private int action;
@@ -17,7 +17,7 @@ public class ClientMotionEvent extends Event {
         return action;
     }
 
-    public ClientMotionEvent(float x, float y, int action) {
+    public ADBMotionEvent(float x, float y, int action) {
         this.x = x;
         this.y = y;
         this.action = action;
