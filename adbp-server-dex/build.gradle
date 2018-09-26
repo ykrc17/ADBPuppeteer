@@ -9,7 +9,7 @@ dependencies {
 }
 
 shadowJar {
-    baseName "adbp"
+    baseName "adbp-server"
     classifier = null
     doLast {
         copy {

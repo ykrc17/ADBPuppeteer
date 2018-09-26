@@ -1,4 +1,4 @@
-package com.ykrc17.adbp.client.ui
+package com.ykrc17.adbp.client.ui.main
 
 import com.ykrc17.adbp.client.SocketClient
 import com.ykrc17.adbp.client.adb.ImageFetcher

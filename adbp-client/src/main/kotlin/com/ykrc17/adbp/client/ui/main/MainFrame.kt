@@ -1,4 +1,4 @@
-package com.ykrc17.adbp.client.ui
+package com.ykrc17.adbp.client.ui.main
 
 import com.ykrc17.adbp.client.input.KeyEventDispatcher
 import java.awt.BorderLayout
@@ -23,6 +23,7 @@ class MainFrame : JFrame("ADBPuppeteer") {
 
     init {
         setSize(800, 600)
+        isLocationByPlatform = true
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         isResizable = false
         layout = BorderLayout()

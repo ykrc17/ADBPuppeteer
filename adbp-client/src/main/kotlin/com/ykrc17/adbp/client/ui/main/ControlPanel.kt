@@ -1,4 +1,4 @@
-package com.ykrc17.adbp.client.ui
+package com.ykrc17.adbp.client.ui.main
 
 import com.ykrc17.adbp.client.input.AndroidKeyEvent
 import com.ykrc17.adbp.client.input.KeyEventDispatcher
