@@ -19,7 +19,7 @@ class NavigationPanel : JPanel {
         }
         add(Box.createHorizontalGlue())
         jbutton("□") { _ ->
-            KeyEventDispatcher.sendADBKeyEvent(AndroidKeyEvent.KEYCODE_MENU)
+            KeyEventDispatcher.sendADBKeyEvent(AndroidKeyEvent.KEYCODE_APP_SWITCH)
         }
     }
 }
