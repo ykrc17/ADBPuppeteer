@@ -1,6 +1,7 @@
 package com.ykrc17.adbp.server
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.ykrc17.adbp.entity.ADBEvent
 import com.ykrc17.adbp.entity.ScreenEvent
 import com.ykrc17.adbp.server.net.ControlConnection
@@ -11,9 +12,11 @@ import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicLong
 
+const val TAG = "ADBP"
+const val TIMEOUT_THRESHOLD = 5000
+
 val threadPool = Executors.newCachedThreadPool()
 val lastEventTime = AtomicLong()
-const val TIMEOUT_THRESHOLD = 10000
 
 fun main(args: Array<String>) {
 
@@ -42,7 +45,7 @@ fun main(args: Array<String>) {
 object TimeOutTask : TimerTask() {
     override fun run() {
         if ((System.currentTimeMillis() - lastEventTime.get()) > TIMEOUT_THRESHOLD) {
-            println("no active client, kill server")
+            logd("no active client, kill server")
             System.exit(0)
         }
     }
@@ -59,4 +62,8 @@ fun handleScreenEvent(event: ScreenEvent, socket: Socket) {
 //    println("transfer: " + (System.currentTimeMillis() - time))
         socket.close()
     }
+}
+
+fun logd(msg: String) {
+    Log.d(TAG, msg)
 }

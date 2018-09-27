@@ -1,10 +1,13 @@
 package com.ykrc17.adbp.server.net
 
+import android.util.Log
 import com.ykrc17.adbp.entity.ADBEvent
 import com.ykrc17.adbp.entity.ADBKeyEvent
 import com.ykrc17.adbp.entity.ADBMotionEvent
+import com.ykrc17.adbp.server.TAG
 import com.ykrc17.adbp.server.handler.KeyEventHandler
 import com.ykrc17.adbp.server.handler.MotionEventHandler
+import com.ykrc17.adbp.server.logd
 import com.ykrc17.adbp.server.threadPool
 import java.io.ObjectInputStream
 import java.net.Socket
@@ -25,12 +28,24 @@ class ControlConnection(val socket: Socket) {
     }
 
     private fun innerStart(ois: ObjectInputStream) {
-        var event = ois.readObject()
-        while (event is ADBEvent) {
-            handleEvent(event)
-            event = ois.readObject()
+        try {
+            while (true) {
+                if (!socket.isClosed) {
+                    val event = ois.readObject()
+                    if (event is ADBEvent) {
+                        handleEvent(event)
+                        continue
+                    }
+                }
+                break
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "", e)
+        } finally {
+            logd("ControlConnection finished, kill server")
+            socket.close()
+            System.exit(0)
         }
-        socket.close()
     }
 
     private fun handleEvent(event: ADBEvent) {
