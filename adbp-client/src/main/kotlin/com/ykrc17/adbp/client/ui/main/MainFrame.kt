@@ -23,9 +23,10 @@ class MainFrame : JFrame("ADBPuppeteer") {
 
     init {
         setSize(800, 600)
-        isLocationByPlatform = true
+        setLocationRelativeTo(null)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         isResizable = false
+
         layout = BorderLayout()
         addKeyListener(keyListener)
 

@@ -22,15 +22,11 @@ object ADB {
     fun pushServerDex(serial: String) {
         println(">> pushing server dex")
         val startTime = System.currentTimeMillis()
-        Runtime.getRuntime().exec("sh adbp-server-push.sh $serial").apply {
-            inputStream.bufferedReader().forEachLine { println(it) }
-            waitFor()
-        }
-        println(">> push success: ${System.currentTimeMillis() - startTime}ms")
         Runtime.getRuntime().exec("sh adbp-server.sh $serial").apply {
             // 等待socket server
             while (!inputStream.bufferedReader().readLine().startsWith("waiting")) {
             }
         }
+        println(">> push success: ${System.currentTimeMillis() - startTime}ms")
     }
 }
