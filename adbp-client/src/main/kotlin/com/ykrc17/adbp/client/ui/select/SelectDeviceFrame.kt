@@ -12,17 +12,16 @@ class SelectDeviceFrame(var devices: List<DeviceEntity>) : JFrame() {
     private val listModel = DefaultListModel<String>()
 
     init {
-        setSize(320, 480)
+        setSize(300, 200)
         setLocationRelativeTo(null)
         defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         title = "请选择设备"
         layout = BorderLayout()
 
-        devices.forEach { listModel.addElement(it.model) }
-
         list.also {
             it.selectionMode = ListSelectionModel.SINGLE_SELECTION
             it.model = listModel
+            updateListModel()
             add(it)
         }
 
@@ -31,8 +30,7 @@ class SelectDeviceFrame(var devices: List<DeviceEntity>) : JFrame() {
             it.add(Box.createHorizontalGlue())
             it.jbutton("刷新") {
                 devices = ADB.getDevices()
-                listModel.removeAllElements()
-                devices.forEach { listModel.addElement(it.model) }
+                updateListModel()
             }
             it.jbutton("取消") { _ ->
                 dispose()
@@ -48,6 +46,14 @@ class SelectDeviceFrame(var devices: List<DeviceEntity>) : JFrame() {
                 }
             }
             add(it, BorderLayout.SOUTH)
+        }
+    }
+
+    private fun updateListModel() {
+        listModel.removeAllElements()
+        devices.forEach { listModel.addElement(it.model) }
+        if (devices.isNotEmpty()) {
+            list.selectedIndex = 0
         }
     }
 }

@@ -3,15 +3,19 @@ package com.ykrc17.adbp.server
 import android.graphics.Bitmap
 import android.util.Log
 import com.ykrc17.adbp.entity.ADBEvent
+import com.ykrc17.adbp.entity.ClipBoardPullEvent
 import com.ykrc17.adbp.entity.ScreenEvent
+import com.ykrc17.adbp.server.handler.Clipboard
 import com.ykrc17.adbp.server.net.ControlConnection
 import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.net.ServerSocket
 import java.net.Socket
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicLong
 
+const val PACKAGE_NAME = "com.android.shell"
 const val TAG = "ADBP"
 const val TIMEOUT_THRESHOLD = 5000
 
@@ -31,10 +35,10 @@ fun main(args: Array<String>) {
         val sin = ObjectInputStream(socket.getInputStream())
         val event = sin.readObject()
         if (event is ADBEvent) {
-            if (event is ScreenEvent) {
-                handleScreenEvent(event, socket)
-            } else {
-                ControlConnection(socket).start(event, sin)
+            when (event) {
+                is ScreenEvent -> handleScreenEvent(socket)
+                is ClipBoardPullEvent -> handleClipboardPullEvent(socket)
+                else -> ControlConnection(socket).start(event, sin)
             }
         } else {
             socket.close()
@@ -43,6 +47,7 @@ fun main(args: Array<String>) {
 }
 
 object TimeOutTask : TimerTask() {
+
     override fun run() {
         if ((System.currentTimeMillis() - lastEventTime.get()) > TIMEOUT_THRESHOLD) {
             logd("no active client, kill server")
@@ -51,7 +56,7 @@ object TimeOutTask : TimerTask() {
     }
 }
 
-fun handleScreenEvent(event: ScreenEvent, socket: Socket) {
+fun handleScreenEvent(socket: Socket) {
     if (!ScreenshotThread.isAlive) {
         ScreenshotThread.start()
     }
@@ -60,6 +65,19 @@ fun handleScreenEvent(event: ScreenEvent, socket: Socket) {
 //    val time = System.currentTimeMillis()
         ScreenshotThread.queue.take().compress(Bitmap.CompressFormat.JPEG, 90, sout)
 //    println("transfer: " + (System.currentTimeMillis() - time))
+        socket.close()
+    }
+}
+
+fun handleClipboardPullEvent(socket: Socket) {
+    threadPool.execute {
+        Clipboard.get()?.also { text ->
+            ObjectOutputStream(socket.getOutputStream()).apply {
+                writeObject(ClipBoardPullEvent.Callback(text))
+                flush()
+                close()
+            }
+        }
         socket.close()
     }
 }
