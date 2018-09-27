@@ -66,7 +66,7 @@ class ScreenPanel : JPanel {
         println("action: $action, ${e.point}")
         val x = e.x / DRAW_SCALE / SCREEN_SHOT_SCALE
         val y = e.y / DRAW_SCALE / SCREEN_SHOT_SCALE
-        SocketClient.newSocket(ADBMotionEvent(x, y, action)) {}
+        SocketClient.send(ADBMotionEvent(x, y, action))
     }
 
     companion object {

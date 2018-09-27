@@ -45,7 +45,7 @@ object KeyEventDispatcher {
     }
 
     fun sendADBKeyEvent(keyCode: Int, metaState: Int = 0) {
-        SocketClient.newSocket(ADBKeyEvent(keyCode, metaState)) {}
+        SocketClient.send(ADBKeyEvent(keyCode, metaState))
     }
 
     private fun convertKeyCode(javaKeyCode: Int): Int {

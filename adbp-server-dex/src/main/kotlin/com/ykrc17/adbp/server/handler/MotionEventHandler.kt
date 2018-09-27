@@ -5,13 +5,12 @@ import android.view.InputDevice
 import android.view.MotionEvent
 import com.ykrc17.adbp.entity.ADBMotionEvent
 import com.ykrc17.adbp.server.ServiceManagerWrapper
-import java.io.OutputStream
 import kotlin.math.roundToInt
 
 object MotionEventHandler : EventHandler<ADBMotionEvent>() {
     private var startTime = 0L
 
-    override fun handle(event: ADBMotionEvent, out: OutputStream) {
+    override fun handle(event: ADBMotionEvent) {
         tap(event)
     }
 

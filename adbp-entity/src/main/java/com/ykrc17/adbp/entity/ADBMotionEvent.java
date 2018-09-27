@@ -1,6 +1,6 @@
 package com.ykrc17.adbp.entity;
 
-public class ADBMotionEvent extends Event {
+public class ADBMotionEvent extends ADBEvent {
     private float x;
     private float y;
     private int action;

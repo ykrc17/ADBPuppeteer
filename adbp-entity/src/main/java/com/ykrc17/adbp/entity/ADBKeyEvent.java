@@ -1,6 +1,6 @@
 package com.ykrc17.adbp.entity;
 
-public class ADBKeyEvent extends Event {
+public class ADBKeyEvent extends ADBEvent {
     private int keyCode;
     private int metaState;
 

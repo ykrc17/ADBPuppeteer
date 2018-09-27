@@ -52,7 +52,7 @@ object ImageFetcher {
     }
 
     private fun fetchImage(): BufferedImage {
-        SocketClient.newSocket(ScreenEvent()) {
+        SocketClient.call(ScreenEvent()) {
             image = ImageIO.read(it)
         }
         return image

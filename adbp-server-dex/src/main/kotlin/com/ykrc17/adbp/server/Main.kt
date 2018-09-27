@@ -1,11 +1,9 @@
 package com.ykrc17.adbp.server
 
 import android.graphics.Bitmap
-import com.ykrc17.adbp.entity.ADBKeyEvent
-import com.ykrc17.adbp.entity.ADBMotionEvent
+import com.ykrc17.adbp.entity.ADBEvent
 import com.ykrc17.adbp.entity.ScreenEvent
-import com.ykrc17.adbp.server.handler.KeyEventHandler
-import com.ykrc17.adbp.server.handler.MotionEventHandler
+import com.ykrc17.adbp.server.net.ControlConnection
 import java.io.ObjectInputStream
 import java.net.ServerSocket
 import java.net.Socket
@@ -29,11 +27,14 @@ fun main(args: Array<String>) {
         lastEventTime.set(System.currentTimeMillis())
         val sin = ObjectInputStream(socket.getInputStream())
         val event = sin.readObject()
-        when (event) {
-            is ScreenEvent -> handleBitmapEvent(event, socket)
-            is ADBMotionEvent -> MotionEventHandler.dispatch(event, socket)
-            is ADBKeyEvent -> KeyEventHandler.dispatch(event, socket)
-            else -> socket.close()
+        if (event is ADBEvent) {
+            if (event is ScreenEvent) {
+                handleScreenEvent(event, socket)
+            } else {
+                ControlConnection(socket).start(event, sin)
+            }
+        } else {
+            socket.close()
         }
     }
 }
@@ -47,7 +48,7 @@ object TimeOutTask : TimerTask() {
     }
 }
 
-fun handleBitmapEvent(event: ScreenEvent, socket: Socket) {
+fun handleScreenEvent(event: ScreenEvent, socket: Socket) {
     if (!ScreenshotThread.isAlive) {
         ScreenshotThread.start()
     }
