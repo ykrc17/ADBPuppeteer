@@ -7,6 +7,7 @@ import com.ykrc17.adbp.entity.ClipBoardPullEvent
 import com.ykrc17.adbp.entity.ScreenEvent
 import com.ykrc17.adbp.server.handler.Clipboard
 import com.ykrc17.adbp.server.net.ControlConnection
+import com.ykrc17.adbp.server.screenshot.ScreenshotThread
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.net.ServerSocket
@@ -23,6 +24,11 @@ val threadPool = Executors.newCachedThreadPool()
 val lastEventTime = AtomicLong()
 
 fun main(args: Array<String>) {
+    val oldUEH = Thread.getDefaultUncaughtExceptionHandler()
+    Thread.setDefaultUncaughtExceptionHandler { t, e ->
+        e.printStackTrace()
+        oldUEH.uncaughtException(t, e)
+    }
 
     val serverSocket = ServerSocket(8000)
     println("waiting client...")

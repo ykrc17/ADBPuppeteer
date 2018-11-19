@@ -1,10 +1,9 @@
-package com.ykrc17.adbp.server
+package com.ykrc17.adbp.server.screenshot
 
 import android.graphics.Bitmap
 import android.hardware.display.DisplayManagerGlobal
 import android.util.DisplayMetrics
 import android.view.Display
-import android.view.SurfaceControl
 import java.util.concurrent.LinkedTransferQueue
 
 object ScreenshotThread : Thread() {
@@ -25,7 +24,7 @@ object ScreenshotThread : Thread() {
         super.run()
         while (true) {
 //            val time = System.currentTimeMillis()
-            val bitmap = SurfaceControl.screenshot(width, height)
+            val bitmap = SurfaceControlCompat.screenshot(width, height)
 //            println("screenshot: " + (System.currentTimeMillis() - time))
             queue.transfer(bitmap)
         }
