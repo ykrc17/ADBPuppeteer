@@ -13,25 +13,26 @@ import java.awt.event.MouseMotionListener
 import javax.swing.JPanel
 
 
-class ScreenPanel : JPanel {
+class ScreenPanel(val mainFrame: MainFrame) : JPanel() {
 
-    constructor() {
+    init {
         EventQueue.invokeLater {
             addMouseListener(mouseListener)
             addMouseMotionListener(mouseListener)
         }
-//        try {
         val image = ImageFetcher.image
         preferredSize = Dimension(Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE))
-//        } catch (ex: Exception) {
-//            error(ex)
-//        }
         ImageFetcher.startFetch(this)
     }
 
     override fun paintComponent(g: Graphics) {
         super.paintComponent(g)
         val image = ImageFetcher.image
+        val newSize = Dimension(Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE))
+        if (newSize != preferredSize) {
+            preferredSize = newSize
+            mainFrame.pack()
+        }
         g.drawImage(image, 0, 0, Math.round(image.width * DRAW_SCALE), Math.round(image.height * DRAW_SCALE), this) // see javadoc for more info on the parameters
     }
 

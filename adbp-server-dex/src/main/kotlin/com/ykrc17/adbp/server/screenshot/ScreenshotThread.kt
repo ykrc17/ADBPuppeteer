@@ -8,10 +8,10 @@ import java.util.concurrent.LinkedTransferQueue
 
 object ScreenshotThread : Thread() {
     val queue = LinkedTransferQueue<Bitmap>()
-    val width: Int
-    val height: Int
+    var width: Int = 0
+    var height: Int = 0
 
-    init {
+    private fun updateDM() {
         val display = DisplayManagerGlobal.getInstance().getRealDisplay(Display.DEFAULT_DISPLAY)
         val metrics = DisplayMetrics()
         display.getRealMetrics(metrics)
@@ -24,6 +24,7 @@ object ScreenshotThread : Thread() {
         super.run()
         while (true) {
 //            val time = System.currentTimeMillis()
+            updateDM()
             val bitmap = SurfaceControlCompat.screenshot(width, height)
 //            println("screenshot: " + (System.currentTimeMillis() - time))
             queue.transfer(bitmap)

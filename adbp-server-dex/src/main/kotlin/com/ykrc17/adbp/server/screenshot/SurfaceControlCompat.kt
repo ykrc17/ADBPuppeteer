@@ -9,8 +9,12 @@ import android.view.SurfaceControl
 object SurfaceControlCompat {
     fun screenshot(width: Int, height: Int): Bitmap {
         return when {
-            Build.VERSION.SDK_INT >= 0 -> {
-                SurfaceControl.screenshot(Rect(), width, height, Surface.ROTATION_0)
+            Build.VERSION.SDK_INT >= 28 -> {
+                SurfaceControl.screenshot(Rect(), width, height, if (width > height) {
+                    Surface.ROTATION_90
+                } else {
+                    Surface.ROTATION_0
+                })
             }
             else -> {
                 SurfaceControl.screenshot(width, height)

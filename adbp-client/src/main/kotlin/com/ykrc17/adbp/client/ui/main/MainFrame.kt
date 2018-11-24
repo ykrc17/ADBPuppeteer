@@ -31,7 +31,7 @@ class MainFrame : JFrame("ADBPuppeteer") {
         addKeyListener(keyListener)
 
         JPanel(BorderLayout()).also {
-            it.add(ScreenPanel())
+            it.add(ScreenPanel(this))
             it.add(NavigationPanel(), BorderLayout.SOUTH)
             add(it)
         }
